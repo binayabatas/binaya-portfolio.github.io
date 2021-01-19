@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Porfolio</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container">
+		<div id="spinner" class="spinner-border" role="status">
+  			<span class="visually-hidden">Loading...</span>
+		</div>
+
+		<div id="jumbo" class="row mt-5" hidden>
+			<div class="col-sm">
+				<img
+					height="100"
+					width="100"
+					id="profileImage"
+				>
+				<h2 id="fullName"></h2>
+				<p id="bio"></p>
+				<a id="twitterUsername">Twitter</a>
+				<h5 id="followersInfo"></h5>
+				<p>
+					Check me on <a id="githubLink">Github</a>
+				</p>
+			</div>
+			<div class="col-sm">
+				<a class="twitter-timeline" data-width="500" data-theme="dark" href="https://twitter.com/elonmusk?ref_src=twsrc%5Etfw">Tweets by elonmusk</a> 
+				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+			</div>
+		</div>
+	</div>
+
+	<script>
+		fetch("https://api.github.com/users/binayabatas")
+			.then(response => response.json())
+			.then(function(data) {
+				let followersCount = data['followers']
+				let followersInfor= `I have been followed by ${followersCount} people.`
+				document.getElementById('profileImage').src = data['avatar_url']
+				document.getElementById('fullName').textContent = data['name']
+				document.getElementById('bio').textContent = data['bio']
+				document.getElementById('followersInfo').textContent = followersInfor
+				document.getElementById('githubLink').href = data['html_url']
+				document.getElementById('twitterUsername').href = data['twitter_username']
+				document.getElementById('jumbo').hidden = false
+				document.getElementById('spinner').hidden = true
+
+
+			})
+	</script>
+</body>
+
+
+</html>
